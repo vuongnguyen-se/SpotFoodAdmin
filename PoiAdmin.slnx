@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="PoiAdmin.Api/PoiAdmin.Api.csproj" />
+  <Project Path="PoiAdmin.Application/PoiAdmin.Application.csproj" />
+  <Project Path="PoiAdmin.Domain/PoiAdmin.Domain.csproj" />
+  <Project Path="PoiAdmin.Infrastructure/PoiAdmin.Infrastructure.csproj" />
+</Solution>
