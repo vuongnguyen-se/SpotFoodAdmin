@@ -1,6 +1,6 @@
-﻿namespace PoiAdmin.Domain.Entities;
+﻿namespace PoiAdmin.Application.DTOs.Translation;
 
-public class PoiTranslation
+public class TranslationDto
 {
     public int TranslationId { get; set; }
     public int PoiId { get; set; }
@@ -10,6 +10,4 @@ public class PoiTranslation
     public string? Address { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-
-    public Poi? Poi { get; set; }
 }
