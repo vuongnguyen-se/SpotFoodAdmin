@@ -15,6 +15,22 @@ public class TranslationsController : ControllerBase
         _translationService = translationService;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _translationService.GetAllAsync();
+        return Ok(result);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var result = await _translationService.GetByIdAsync(id);
+        if (result == null) return NotFound();
+
+        return Ok(result);
+    }
+
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] CreateTranslationRequest request)
     {

@@ -6,39 +6,43 @@ import {
   FileTextOutlined,
   SoundOutlined,
 } from "@ant-design/icons";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
 const { Title, Text } = Typography;
 
 const menuItems = [
   {
-    key: "poi",
+    key: "/pois",
     icon: <EnvironmentOutlined />,
     label: "POIs",
   },
   {
-    key: "categories",
+    key: "/categories",
     icon: <AppstoreOutlined />,
     label: "Categories",
   },
   {
-    key: "translations",
+    key: "/translations",
     icon: <TranslationOutlined />,
     label: "Translations",
   },
   {
-    key: "contents",
+    key: "/contents",
     icon: <FileTextOutlined />,
     label: "Contents",
   },
   {
-    key: "audios",
+    key: "/audios",
     icon: <SoundOutlined />,
     label: "Audios",
   },
 ];
 
 function AdminLayout({ children }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   return (
     <Layout style={{ minHeight: "100vh", background: "#eef2f7" }}>
       <Sider
@@ -58,8 +62,9 @@ function AdminLayout({ children }) {
 
         <Menu
           mode="inline"
-          defaultSelectedKeys={["poi"]}
+          selectedKeys={[location.pathname]}
           items={menuItems}
+          onClick={({ key }) => navigate(key)}
           style={{ borderRight: "none" }}
         />
       </Sider>

@@ -15,6 +15,35 @@ public class ContentService : IContentService
         _context = context;
     }
 
+    public async Task<List<ContentDto>> GetAllAsync()
+    {
+        return await _context.PoiContents
+            .Select(x => new ContentDto
+            {
+                ContentId = x.ContentId,
+                PoiId = x.PoiId,
+                Title = x.Title,
+                Description = x.Description,
+                AudioId = x.AudioId
+            })
+            .ToListAsync();
+    }
+
+    public async Task<ContentDto?> GetByIdAsync(int id)
+    {
+        return await _context.PoiContents
+            .Where(x => x.ContentId == id)
+            .Select(x => new ContentDto
+            {
+                ContentId = x.ContentId,
+                PoiId = x.PoiId,
+                Title = x.Title,
+                Description = x.Description,
+                AudioId = x.AudioId
+            })
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<List<ContentDto>> GetByPoiIdAsync(int poiId)
     {
         return await _context.PoiContents
