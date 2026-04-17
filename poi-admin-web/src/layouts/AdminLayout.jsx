@@ -1,10 +1,11 @@
-import { Layout, Menu, Avatar, Typography } from "antd";
+import { Layout, Menu, Avatar, Typography, Button, Space } from "antd";
 import {
   EnvironmentOutlined,
   AppstoreOutlined,
   TranslationOutlined,
   FileTextOutlined,
   SoundOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -12,36 +13,22 @@ const { Header, Sider, Content } = Layout;
 const { Title, Text } = Typography;
 
 const menuItems = [
-  {
-    key: "/pois",
-    icon: <EnvironmentOutlined />,
-    label: "POIs",
-  },
-  {
-    key: "/categories",
-    icon: <AppstoreOutlined />,
-    label: "Categories",
-  },
-  {
-    key: "/translations",
-    icon: <TranslationOutlined />,
-    label: "Translations",
-  },
-  {
-    key: "/contents",
-    icon: <FileTextOutlined />,
-    label: "Contents",
-  },
-  {
-    key: "/audios",
-    icon: <SoundOutlined />,
-    label: "Audios",
-  },
+  { key: "/pois", icon: <EnvironmentOutlined />, label: "POIs" },
+  { key: "/categories", icon: <AppstoreOutlined />, label: "Categories" },
+  { key: "/translations", icon: <TranslationOutlined />, label: "Translations" },
+  { key: "/contents", icon: <FileTextOutlined />, label: "Contents" },
+  { key: "/audios", icon: <SoundOutlined />, label: "Audios" },
 ];
 
 function AdminLayout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("isAuthenticated");
+    navigate("/login");
+  };
 
   return (
     <Layout style={{ minHeight: "100vh", background: "#eef2f7" }}>
@@ -80,7 +67,12 @@ function AdminLayout({ children }) {
             padding: "0 24px",
           }}
         >
-          <Avatar style={{ backgroundColor: "#1677ff" }}>VN</Avatar>
+          <Space>
+            <Avatar style={{ backgroundColor: "#1677ff" }}>VN</Avatar>
+            <Button icon={<LogoutOutlined />} onClick={handleLogout}>
+              Logout
+            </Button>
+          </Space>
         </Header>
 
         <Content style={{ padding: 24 }}>
