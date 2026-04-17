@@ -1,12 +1,7 @@
-import AdminLayout from "./layouts/AdminLayout";
-import PoiManagementPage from "./pages/PoiManagementPage";
+import AppRouter from "./router/AppRouter";
 
 function App() {
-  return (
-    <AdminLayout>
-      <PoiManagementPage />
-    </AdminLayout>
-  );
+  return <AppRouter />;
 }
 
 export default App;

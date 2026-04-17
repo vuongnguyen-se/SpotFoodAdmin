@@ -15,6 +15,41 @@ public class TranslationService : ITranslationService
         _context = context;
     }
 
+    public async Task<List<TranslationDto>> GetAllAsync()
+    {
+        return await _context.PoiTranslations
+            .Select(x => new TranslationDto
+            {
+                TranslationId = x.TranslationId,
+                PoiId = x.PoiId,
+                LanguageCode = x.LanguageCode,
+                Name = x.Name,
+                Description = x.Description,
+                Address = x.Address,
+                CreatedAt = x.CreatedAt,
+                UpdatedAt = x.UpdatedAt
+            })
+            .ToListAsync();
+    }
+
+    public async Task<TranslationDto?> GetByIdAsync(int id)
+    {
+        return await _context.PoiTranslations
+            .Where(x => x.TranslationId == id)
+            .Select(x => new TranslationDto
+            {
+                TranslationId = x.TranslationId,
+                PoiId = x.PoiId,
+                LanguageCode = x.LanguageCode,
+                Name = x.Name,
+                Description = x.Description,
+                Address = x.Address,
+                CreatedAt = x.CreatedAt,
+                UpdatedAt = x.UpdatedAt
+            })
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<List<TranslationDto>> GetByPoiIdAsync(int poiId)
     {
         return await _context.PoiTranslations
