@@ -5,6 +5,7 @@ import {
   TranslationOutlined,
   FileTextOutlined,
   SoundOutlined,
+  MonitorOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -18,6 +19,7 @@ const menuItems = [
   { key: "/translations", icon: <TranslationOutlined />, label: "Translations" },
   { key: "/contents", icon: <FileTextOutlined />, label: "Contents" },
   { key: "/audios", icon: <SoundOutlined />, label: "Audios" },
+  { key: "/monitoring", icon: <MonitorOutlined />, label: "Monitoring" },
 ];
 
 function AdminLayout({ children }) {

@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PoiAdmin.Application.DTOs.Poi;
 using PoiAdmin.Application.Interfaces;
+using PoiAdmin.Domain.Entities;
+using PoiAdmin.Infrastructure.Data;
 
 namespace PoiAdmin.Api.Controllers;
 
@@ -9,10 +12,12 @@ namespace PoiAdmin.Api.Controllers;
 public class PoiController : ControllerBase
 {
     private readonly IPoiService _poiService;
+    private readonly AppDbContext _context;
 
-    public PoiController(IPoiService poiService)
+    public PoiController(IPoiService poiService, AppDbContext context)
     {
         _poiService = poiService;
+        _context = context;
     }
 
     [HttpGet]
@@ -22,11 +27,36 @@ public class PoiController : ControllerBase
         return Ok(result);
     }
 
+    //[HttpGet("{id}")]
+    //public async Task<IActionResult> GetById(int id)
+    //{
+    //    var result = await _poiService.GetByIdAsync(id);
+    //    if (result == null) return NotFound();
+    //    return Ok(result);
+    //}
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
         var result = await _poiService.GetByIdAsync(id);
+
+        var deviceId = Request.Headers["x-device-id"].ToString();
+
+        var log = new ApiAccessLog
+        {
+            DeviceId = string.IsNullOrWhiteSpace(deviceId) ? "unknown-device" : deviceId,
+            Endpoint = $"/api/pois/{id}",
+            HttpMethod = "GET",
+            PoiId = id,
+            StatusCode = result == null ? 404 : 200,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.ApiAccessLogs.Add(log);
+        await _context.SaveChangesAsync();
+
         if (result == null) return NotFound();
+
         return Ok(result);
     }
 
