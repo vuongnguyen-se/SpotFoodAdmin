@@ -9,4 +9,5 @@ public class CreatePoiRequest
     public int? CategoryId { get; set; }
     public string? Address { get; set; }
     public string? MapLink { get; set; }
+    public int Priority { get; set; }
 }

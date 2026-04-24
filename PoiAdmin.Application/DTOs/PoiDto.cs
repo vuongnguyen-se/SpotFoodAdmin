@@ -11,5 +11,6 @@ public class PoiDto
     public string? CategoryName { get; set; }
     public string? Address { get; set; }
     public string? MapLink { get; set; }
+    public int Priority { get; set; }
     public DateTime CreatedAt { get; set; }
 }

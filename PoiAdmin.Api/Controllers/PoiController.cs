@@ -63,6 +63,11 @@ public class PoiController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreatePoiRequest request)
     {
+        if (request.Priority < 1 || request.Priority > 5)
+        {
+            return BadRequest("Priority must be between 1 and 5.");
+        }
+
         var id = await _poiService.CreateAsync(request);
         return Ok(new { id });
     }
@@ -70,6 +75,11 @@ public class PoiController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] CreatePoiRequest request)
     {
+        if (request.Priority < 1 || request.Priority > 5)
+        {
+            return BadRequest("Priority must be between 1 and 5.");
+        }
+
         var updated = await _poiService.UpdateAsync(id, request);
         if (!updated) return NotFound();
         return NoContent();

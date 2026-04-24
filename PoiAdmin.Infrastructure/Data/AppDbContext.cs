@@ -37,6 +37,7 @@ public class AppDbContext : DbContext
             entity.Property(x => x.CategoryId).HasColumnName("category_id");
             entity.Property(x => x.Address).HasColumnName("address");
             entity.Property(x => x.MapLink).HasColumnName("map_link");
+            entity.Property(x => x.Priority).HasColumnName("priority");
             entity.Property(x => x.CreatedAt).HasColumnName("created_at");
 
             entity.HasOne(x => x.Category)
