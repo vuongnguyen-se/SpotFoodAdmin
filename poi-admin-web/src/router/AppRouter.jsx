@@ -8,6 +8,7 @@ import CategoryManagementPage from "../pages/CategoryManagementPage";
 import TranslationManagementPage from "../pages/TranslationManagementPage";
 import ContentManagementPage from "../pages/ContentManagementPage";
 import AudioManagementPage from "../pages/AudioManagementPage";
+import MonitoringPage from "../pages/MonitoringPage";
 
 function AppRouter() {
   return (
@@ -75,6 +76,17 @@ function AppRouter() {
           <ProtectedRoute>
             <AdminLayout>
               <AudioManagementPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/monitoring"
+        element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <MonitoringPage />
             </AdminLayout>
           </ProtectedRoute>
         }
