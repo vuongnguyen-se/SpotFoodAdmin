@@ -93,24 +93,27 @@ function PoiManagementPage() {
   const handleOpenCreateModal = () => {
     setEditingPoiId(null);
     form.resetFields();
+    form.setFieldsValue({
+      priority: 1,
+    });
     setIsModalOpen(true);
   };
 
   const handleOpenEditModal = async (id) => {
     try {
-        setIsModalOpen(true);
-        setEditingPoiId(id);
+      setIsModalOpen(true);
+      setEditingPoiId(id);
 
-        const response = await getPoiById(id);
-        const poi = response.data;
+      const response = await getPoiById(id);
+      const poi = response.data;
 
-        if (!poi) {
+      if (!poi) {
         message.error("Không tìm thấy POI");
         handleCloseModal();
         return;
-        }
+      }
 
-        form.setFieldsValue({
+      form.setFieldsValue({
         name: poi.name,
         latitude: poi.latitude,
         longitude: poi.longitude,
@@ -118,13 +121,14 @@ function PoiManagementPage() {
         categoryId: poi.categoryId,
         address: poi.address,
         mapLink: poi.mapLink,
-        });
+        priority: poi.priority,
+      });
     } catch (error) {
-        console.error(error);
-        message.error("Không tải được thông tin POI");
-        handleCloseModal();
+      console.error(error);
+      message.error("Không tải được thông tin POI");
+      handleCloseModal();
     }
-};
+  };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -145,6 +149,7 @@ function PoiManagementPage() {
         categoryId: values.categoryId ?? null,
         address: values.address || null,
         mapLink: values.mapLink || null,
+        priority: values.priority,
       };
 
       if (editingPoiId) {
@@ -178,12 +183,37 @@ function PoiManagementPage() {
     }
   };
 
+  const priorityOptions = [
+  { label: "1", value: 1 },
+  { label: "2", value: 2 },
+  { label: "3", value: 3 },
+  { label: "4", value: 4 },
+  { label: "5", value: 5 },
+];
+
   const categoryOptions = useMemo(() => {
     return categories.map((item) => ({
       label: item.categoryName,
       value: item.categoryId,
     }));
   }, [categories]);
+
+  const getPriorityColor = (priority) => {
+    switch (priority) {
+      case 5:
+        return "red";
+      case 4:
+        return "volcano";
+      case 3:
+        return "gold";
+      case 2:
+        return "blue";
+      case 1:
+        return "default";
+      default:
+        return "default";
+    }
+  };
 
   const columns = [
     {
@@ -207,6 +237,13 @@ function PoiManagementPage() {
         ) : (
           <Text type="secondary">N/A</Text>
         ),
+    },
+    {
+      title: "Priority",
+      dataIndex: "priority",
+      key: "priority",
+      width: 110,
+      render: (value) => <Tag color={getPriorityColor(value)}>{value}</Tag>,
     },
     {
       title: "Address",
@@ -358,6 +395,18 @@ function PoiManagementPage() {
               allowClear
               placeholder="Select category"
               options={categoryOptions}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Priority"
+            name="priority"
+            initialValue={1}
+            rules={[{ required: true, message: "Vui lòng chọn priority" }]}
+          >
+            <Select
+              placeholder="Select priority"
+              options={priorityOptions}
             />
           </Form.Item>
 

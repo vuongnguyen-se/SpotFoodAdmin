@@ -43,6 +43,7 @@ public class PoiService : IPoiService
                 CategoryName = x.Category != null ? x.Category.CategoryName : null,
                 Address = x.Address,
                 MapLink = x.MapLink,
+                Priority = x.Priority,
                 CreatedAt = x.CreatedAt
             })
             .ToListAsync();
@@ -64,6 +65,7 @@ public class PoiService : IPoiService
                 CategoryName = x.Category != null ? x.Category.CategoryName : null,
                 Address = x.Address,
                 MapLink = x.MapLink,
+                Priority = x.Priority,
                 CreatedAt = x.CreatedAt
             })
             .FirstOrDefaultAsync();
@@ -80,6 +82,7 @@ public class PoiService : IPoiService
             CategoryId = request.CategoryId,
             Address = request.Address,
             MapLink = request.MapLink,
+            Priority = request.Priority,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -101,6 +104,7 @@ public class PoiService : IPoiService
         poi.CategoryId = request.CategoryId;
         poi.Address = request.Address;
         poi.MapLink = request.MapLink;
+        poi.Priority = request.Priority;
 
         await _context.SaveChangesAsync();
         return true;
